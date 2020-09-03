@@ -7,13 +7,13 @@ import os
 
 def start_scraper(url):
     process = CrawlerProcess(get_project_settings())
-    process.crawl(FullSiteSpider, url=url, save_dir = os.path.join('/output',os.environ.get('language')), model_path=os.path.join('/workdir', os.environ.get('language'), 'model.p'))
+    process.crawl(FullSiteSpider, url=url, save_dir = os.path.join('/output', language_prefix), model_path=os.path.join('/workdir', language_prefix, 'model.p'))
     process.start()
 
 if __name__ == '__main__':
-    LANGUAGE = os.environ.get('language')
-    with open(os.path.join('/workdir', os.environ.get('language'), 'seedlist'), 'r') as seedlist:
-        urls = seedlist.read().splitlines() 
+    language_prefix = os.environ.get('language')
+    with open(os.path.join('/workdir', language_prefix, 'seedlist'), 'r') as seedlist:
+        urls = seedlist.read().splitlines()
         pool = Pool()
         pool.map(start_scraper, urls)
         pool.close()
