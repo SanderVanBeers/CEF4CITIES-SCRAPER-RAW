@@ -18,6 +18,7 @@ from lxml import html
 from scrapy.http import HtmlResponse
 from scrapy.exceptions import NotConfigured
 import html2text
+from bs4 import BeautifulSoup
 import pickle
 
 output_json={}
@@ -134,9 +135,7 @@ class FullSiteSpider(scrapy.Spider):
 
             clean_body = self.cleaner.clean_html(response.body)
             
-            raw_text = html.fromstring(clean_body).text_content().encode('utf-8')
-            
-            content = htmlToText(clean_body)
+            content = self.htmlToText(clean_body)
             probabilities=list( self.clf.predict_proba( [ content ] )[0] )
             output_json['rejected_probability']=probabilities[0]
             output_json['accepted_probability']=probabilities[1]
@@ -286,7 +285,7 @@ class FullSiteSpider(scrapy.Spider):
                 return True
         return False
     
-    def htmlToText(html):
+    def htmlToText(self, html):
         #Whitelist with all tags we want to keep
         whitelist = ['p','title','h1']
         soup = BeautifulSoup(html, features='lxml')
