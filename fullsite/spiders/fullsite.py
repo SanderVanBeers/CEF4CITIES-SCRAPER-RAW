@@ -24,8 +24,6 @@ output_json={}
 class FullSiteSpider(scrapy.Spider):
     
     pwd = os.getcwd()
-    MODEL_PATH= "model.p"
-    clf = pickle.load( open( MODEL_PATH  , "rb" ) )
     name = "FullSite"
 
     MAX_PATH_DEPTH = 15
@@ -51,7 +49,11 @@ class FullSiteSpider(scrapy.Spider):
         if (not save_dir_root):
             raise NotConfigured(
                 "Expecting a save_dir property to be configured where the data must be stored")
-
+        self.model_path = kwargs.get('model_path')
+        if not self.model_path:
+            raise NotConfigured(
+                "Expecting a model_path property to be configured to classify the html-pages")
+        self.clf = pickle.load( open(self.model_path  , "rb"))
         self.ONLY_DOCS = kwargs.get('only_docs')
 
         self.langs = kwargs.get('langs')
