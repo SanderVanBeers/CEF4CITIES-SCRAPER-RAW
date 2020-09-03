@@ -136,7 +136,7 @@ class FullSiteSpider(scrapy.Spider):
             
             raw_text = html.fromstring(clean_body).text_content().encode('utf-8')
             
-            content = raw_text
+            content = htmlToText(clean_body)
             probabilities=list( self.clf.predict_proba( [ content ] )[0] )
             output_json['rejected_probability']=probabilities[0]
             output_json['accepted_probability']=probabilities[1]
@@ -285,4 +285,19 @@ class FullSiteSpider(scrapy.Spider):
             if len(array[key]) > max_occurences:
                 return True
         return False
+    
+    def htmlToText(html):
+        #Whitelist with all tags we want to keep
+        whitelist = ['p','title','h1']
+        soup = BeautifulSoup(html, features='lxml')
+        text = []
+        for tag in soup.find_all(True):
+                try:
+                    if tag.string and not tag.string.isspace():
+                        if tag.name in whitelist:
+                            text.append(tag.string.strip())
+                except RecursionError:
+                    print(f"Recursion error with {path_html}")
+        text = ' '.join(text)
+        return text
 
