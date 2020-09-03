@@ -296,7 +296,7 @@ class FullSiteSpider(scrapy.Spider):
                         if tag.name in whitelist:
                             text.append(tag.string.strip())
                 except RecursionError:
-                    print(f"Recursion error with {path_html}")
+                    print(f"Recursion error")
         text = ' '.join(text)
         return text
 
