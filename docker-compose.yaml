@@ -1,0 +1,44 @@
+version: '3'
+services:
+    scraper-de:
+        build: .
+        volumes:
+            - "scraped-data:/output"
+        environment:
+            - language=de
+        network_mode: "bridge"
+
+    scraper-fr:
+        build: .
+        volumes:
+            - "scraped-data:/output"
+        environment:
+            - language=fr
+        network_mode: "bridge"
+
+    scraper-hr:
+        build: .
+        volumes:
+            - "scraped-data:/output"
+        environment:
+            - language=hr
+        network_mode: "bridge"
+
+    scraper-no:
+        build: .
+        volumes:
+            - "scraped-data:/output"
+        environment:
+            - language=no
+        network_mode: "bridge"
+
+    scraper-sl:
+        build: .
+        volumes:
+            - "scraped-data:/output"
+        environment:
+            - language=sl
+        network_mode: "bridge"
+        
+volumes:
+    scraped-data:
