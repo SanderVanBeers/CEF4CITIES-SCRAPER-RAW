@@ -1,52 +1,67 @@
 version: '3'
 services:
     scraper-de:
-        build: .
+        image: docker.crosslang.com/cefat4cities/scraper
         volumes:
-            - "scraped-data:/output"
+            - "scraped-data-de:/output"
+        labels:
+            kompose.image-pull-secret: "docker.crosslang.com"
+            kompose.volume.size: 50Gi
         environment:
             - language=de
         network_mode: "bridge"
 
     scraper-fr:
-        build: .
+        image: docker.crosslang.com/cefat4cities/scraper
         volumes:
-            - "scraped-data:/output"
+            - "scraped-data-fr:/output"
+        labels:
+            kompose.image-pull-secret: "docker.crosslang.com"
+            kompose.volume.size: 50Gi
         environment:
             - language=fr
         network_mode: "bridge"
 
     scraper-hr:
-        build: .
+        image: docker.crosslang.com/cefat4cities/scraper
         volumes:
-            - "scraped-data:/output"
+            - "scraped-data-hr:/output"
+        labels:
+            kompose.image-pull-secret: "docker.crosslang.com"
+            kompose.volume.size: 50Gi
         environment:
             - language=hr
         network_mode: "bridge"
 
     scraper-it:
-        build: .
+        image: docker.crosslang.com/cefat4cities/scraper
         volumes:
-            - "scraped-data:/output"
+            - "scraped-data-it:/output"
+        labels:
+            kompose.image-pull-secret: "docker.crosslang.com"
+            kompose.volume.size: 50Gi
         environment:
             - language=it
         network_mode: "bridge"
 
     scraper-no:
-        build: .
+        image: docker.crosslang.com/cefat4cities/scraper
         volumes:
-            - "scraped-data:/output"
+            - "scraped-data-no:/output"
+        labels:
+            kompose.image-pull-secret: "docker.crosslang.com"
+            kompose.volume.size: 50Gi
         environment:
             - language=no
         network_mode: "bridge"
 
     scraper-sl:
-        build: .
+        image: docker.crosslang.com/cefat4cities/scraper
         volumes:
-            - "scraped-data:/output"
+            - "scraped-data-sl:/output"
+        labels:
+            kompose.image-pull-secret: "docker.crosslang.com"
+            kompose.volume.size: 50Gi
         environment:
             - language=sl
         network_mode: "bridge"
-        
-volumes:
-    scraped-data:

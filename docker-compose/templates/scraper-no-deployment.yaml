@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -c
+    kompose.image-pull-secret: crosslang
+    kompose.version: 1.19.0 (f63a961c)
+    kompose.volume.size: 50Gi
+  creationTimestamp: null
+  labels:
+    io.kompose.service: scraper-no
+  name: scraper-no
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: scraper-no
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -c
+        kompose.image-pull-secret: crosslang
+        kompose.version: 1.19.0 (f63a961c)
+        kompose.volume.size: 50Gi
+      creationTimestamp: null
+      labels:
+        io.kompose.service: scraper-no
+    spec:
+      containers:
+      - env:
+        - name: language
+          value: "no"
+        image: docker.crosslang.com/cefat4cities/scraper
+        name: scraper-no
+        resources: {}
+        volumeMounts:
+        - mountPath: /output
+          name: scraped-data-no
+      imagePullSecrets:
+      - name: crosslang
+      restartPolicy: Always
+      volumes:
+      - name: scraped-data-no
+        persistentVolumeClaim:
+          claimName: scraped-data-no
+status: {}
